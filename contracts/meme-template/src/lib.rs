@@ -77,28 +77,6 @@ impl Counter {
         &mut self,
         token_id: TokenId,
         owner_id: ValidAccountId,
-        token_metadata: TokenMetadata
-    ) -> Token {
-        /*let mut s = std::string::String::from("123");
-        near call $ID nft_mint '{"token_id": "0", "receiver_id": "'$ID'", "token_metadata": { "title": "Olympus Mons", "description": "Tallest mountain in charted solar system", "media": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Olympus_Mons_alt.jpg/1024px-Olympus_Mons_alt.jpg", "copies": 1}}' --accountId $ID --deposit 0.1
-
-        ValidAccountId::try_from()
-        let key = ValidAccountId::try_from("alice.near").unwrap();
-
-        let mut owner_tokens: Vec<Token> =
-            self.tokens.nft_tokens_for_owner(, None, None).unwrap_json();
-
-        let log_message = format!("Tokens = {:?}", owner_tokens);
-        env::log(log_message.as_bytes());*/
-
-        self.tokens.mint(token_id, owner_id, Some(token_metadata))
-    }
-
-    /*#[payable]
-    pub fn nft_mint(
-        &mut self,
-        token_id: TokenId,
-        owner_id: ValidAccountId,
         title: std::string::String,
         description: std::string::String,
         media: std::string::String,
@@ -118,7 +96,7 @@ impl Counter {
                 media: Some(media.into()),
                 media_hash: Some(media_hash),
                 copies: Some(1u64),
-                issued_at: Some(iso8601(&std::time::SystemTime::now())),
+                issued_at: None,
                 expires_at: None,
                 starts_at: None,
                 updated_at: None,
@@ -127,28 +105,6 @@ impl Counter {
                 reference_hash: None,
             }),
         )
-    }*/
-
-
-    pub fn increment(&mut self, value: &i32) {
-        // note: adding one like this is an easy way to accidentally overflow
-        // real smart contracts will want to have safety checks
-        // e.g. self.val = i8::wrapping_add(self.val, 1);
-        // https://doc.rust-lang.org/std/primitive.i8.html#method.wrapping_add
-        //self.val += value.to_i8().unwrap();
-        self.container.push(&MemeTemplate {
-            nft_id: *value,
-            ntf_metadata: "".to_string(),
-            creator: "".to_string(),
-        });
-
-        let mut sum = 0;
-        for val in self.container.iter() {
-            sum += val.nft_id;
-        }
-
-        let log_message = format!("Sum = {}", sum);
-        env::log(log_message.as_bytes());
     }
 }
 
